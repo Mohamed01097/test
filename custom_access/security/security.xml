@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="famous_invoices_partners_group" model="res.groups">
+            <field name="name">Famous Partners</field>
+        </record>
+
+        <record id="custom_invoices_access_for_partner" model="ir.model.access">
+            <field name="name">Partner Access Rights For Invoices</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field name="group_id" ref="custom_access.famous_invoices_partners_group"/>
+            <field name="perm_read" eval="1"/>
+            <field name="perm_write" eval="0"/>
+            <field name="perm_create" eval="0"/>
+            <field name="perm_unlink" eval="0"/>
+        </record>
+
+        <record model="ir.rule" id="custom_invoices_record_rule_for_partner">
+            <field name="name">Record Rule For The Partners In Invoices</field>
+            <field name="model_id" ref="model_account_move"/>
+            <field eval="[(4,ref('custom_access.famous_invoices_partners_group'))]" name="groups"/>
+            <field name="domain_force">[('partner_id.name','=',user.partner_id.name)]</field>
+        </record>
+
+    </data>
+</odoo>
